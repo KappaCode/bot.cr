@@ -1,0 +1,13 @@
+name: bot
+version: 0.1.0
+
+authors:
+  -  <>
+dependencies:
+  spec2:
+    github: waterlink/spec2.cr
+    version: ~> 0.4.0
+  mocks:
+    github: waterlink/mocks.cr 
+
+license: MIT
