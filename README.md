@@ -1,22 +1,31 @@
 # bot
 
-TODO: Write a description here
+A twitch bot written in crystal
+
+## Requirments
+
+- [crystal][crystal-lang]
 
 ## Installation
 
+```
+$ crystal deps
+$ crystal src/bot/bot.cr
+```
 
-TODO: Write installation instructions here
+### Credentials
 
+```
+$ mkdir ./config
+$ cp -r ./.config ./config
+$ $EDITOR ./config/credentials.yml
+``` 
 
 ## Usage
 
 
-
-TODO: Write usage instructions here
-
 ## Development
 
-TODO: Write development instructions here
 
 ## Contributing
 
@@ -28,4 +37,12 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [[your-github-name]](https://github.com/[your-github-name])  - creator, maintainer
+- [KappaCode]](https://github.com/KappaCode)  - creator, maintainer
+
+[crystal-lang]: https://crystal-lang.org
+
+## Changelog
+
+[0.1.0] "Let There be rock!" [WIP]
+
+- Connect to a channel given credentials
