@@ -29,6 +29,7 @@ module Core
       send(connection, "NICK #{@user_name}#{@cariot_return}")
       send(connection, "USER #{@user_name}#{@cariot_return}")
       send(connection, "JOIN #{@channel}#{@cariot_return}")
+      puts "connected to #{@channel}"
     end
     def disconnect(connection)
       send(connection, "/PART #{@channel}")

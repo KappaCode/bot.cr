@@ -16,28 +16,32 @@ Spec2.describe Bot do
         expect(subject.oauth_password).to eq("oauth_pwd")
         expect(subject.channel).to eq("channel")
       end
-      it "#initialize with connect" do
-        subject = Core::Bot.new(@@credential_list, true)
-        has_started = subject.start()
-      end
+      # it "#initialize with connect" do
+        # subject = Core::Bot.new(@@credential_list, true)
+      # end
     end
     describe Core::Commander do
       subject { Core::Commander.new()}
       @@adverb = -> (a : String) { "a #{a}" }
-      before{subject.register("adverb", @@adverb)}
       it "#initialize" do
         expect(subject.queue).to be_truthy
       end
       it "#register" do
-        result = subject.queue["adverb"].call("b")
-        expect(result).to eq("a b")
+        subject.register("adverb", 0, @@adverb)
+        expect(subject.queue.first()).to be_a(Core::Command)
       end
       it "#handle" do
+        subject.register("adverb", 0, @@adverb)
         result = subject.handle("user", "adverb b")
+        expect(result).to be_a(Tuple(String, String))
+      end
+      it "#execute" do
+        subject.register("adverb", 0, @@adverb)
+        handler = subject.handle("user", "adverb b")
+        result = subject.execute(handler as Tuple(String, String), 0)
         expect(result).to eq("a b")
       end
     end
-
   end
   describe Service do
     describe Service::Format do
@@ -79,4 +83,8 @@ Spec2.describe Bot do
       end
     end
   end
+  # describe Plugin do
+  #   descrive Plugin::Manager do
+  #   end
+  # end
 end

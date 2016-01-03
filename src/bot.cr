@@ -6,7 +6,9 @@ require "./bot/resolver/*"
 
 module Bot
   $env = :test
-  credentials = Resolver::Credentials.new()
-  data = credentials.load()
-  bot = Core::Bot.new(data, true)
+  if :test != $env
+    credentials = Resolver::Credentials.new()
+    data = credentials.load()
+    bot = Core::Bot.new(data, true)
+  end
 end
