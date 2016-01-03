@@ -17,7 +17,7 @@ Spec2.describe Bot do
         expect(subject.channel).to eq("channel")
       end
       # it "#initialize with connect" do
-        # subject = Core::Bot.new(@@credential_list, true)
+      # subject = Core::Bot.new(@@credential_list, true)
       # end
     end
     describe Core::Commander do
@@ -27,18 +27,20 @@ Spec2.describe Bot do
         expect(subject.queue).to be_truthy
       end
       it "#register" do
-        subject.register("adverb", 0, @@adverb)
+        subject.register("adverb", "before", @@adverb)
         expect(subject.queue.first()).to be_a(Core::Command)
       end
       it "#handle" do
-        subject.register("adverb", 0, @@adverb)
+        subject.register("adverb", "before", @@adverb)
         result = subject.handle("user", "adverb b")
         expect(result).to be_a(Tuple(String, String))
       end
       it "#execute" do
-        subject.register("adverb", 0, @@adverb)
+        subject.register("adverb", "before", @@adverb)
         handler = subject.handle("user", "adverb b")
-        result = subject.execute(handler as Tuple(String, String), 0)
+        result = subject.execute(
+                                 handler as Tuple(String, String),
+                                 "before")
         expect(result).to eq("a b")
       end
     end
@@ -83,8 +85,45 @@ Spec2.describe Bot do
       end
     end
   end
-  # describe Plugin do
-  #   descrive Plugin::Manager do
-  #   end
-  # end
+  describe Plugin do
+    describe Plugin::Manager do
+      describe "procedural" do
+        subject {Plugin::Manager.new()}
+        @@prefix = -> (a : String) { "< #{a}" }
+        @@suffix = -> (a : String) { "#{a} >"}
+        @@action = -> (a : String) {"-#{a}-"}
+        it "#initialize" do
+          expect(subject.has_before).to be_false
+          expect(subject.has_after).to be_false
+        end
+        it "#handle" do
+          subject.register("adverb", "before", @@prefix)
+          handler = subject.handle("user", "adverb b")
+          expect(subject.username).to be_a(String)
+          expect(subject.message).to be_a(String)
+        end
+        it "::config" do
+          File.write("config/config.yml", "name: \"hello\"")
+          subject.config = ["config", "config.yml"]
+          expect(subject.config["name"]).to be_a(String)
+        end
+        it "#run" do
+          arg = "arguments"
+          subject.register("adverb", "before", @@prefix)
+          subject.register("adverb", "action", @@action)
+          subject.register("adverb", "after", @@suffix)
+          handler = subject.handle("user", "adverb #{arg}")
+          result = subject.run(handler)
+          expect(result).to eq({
+                                 "< arguments",
+                                 "-arguments-",
+                                 "arguments >"
+                               })
+        end
+      end
+      # describe "object oriented" do
+      #   subject {Plugin::Manager.new()}
+      # end
+    end
+  end
 end

@@ -3,6 +3,8 @@ require "./bot/*"
 require "./bot/core/*"
 require "./bot/service/*"
 require "./bot/resolver/*"
+require "./bot/plugin/*"
+
 
 module Bot
   $env = :test
