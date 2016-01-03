@@ -1,0 +1,7 @@
+test:
+    database:
+        sqlite3: "memory:"
+    cache:
+        directory: ".cache"
+        
+        

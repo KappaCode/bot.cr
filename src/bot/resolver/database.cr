@@ -1,8 +1,8 @@
 module Resolver
   class Database
     getter filename
-    def initialize
-      @filename = "config/database.yml"
+    def initialize(filename)
+      @filename = filename
     end
     def load
       contents = File.read(@filename)

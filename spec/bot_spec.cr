@@ -64,7 +64,7 @@ Spec2.describe Bot do
   end
   describe Resolver do
     describe Resolver::Credentials do
-      subject { Resolver::Credentials.new()}
+      subject { Resolver::Credentials.new("./.config/credentials.yml")}
       it "#initalize" do
         expect(subject.filename).to be_a(String)
       end
@@ -74,7 +74,7 @@ Spec2.describe Bot do
       end
     end
     describe Resolver::Database do
-      subject {Resolver::Database.new}
+      subject {Resolver::Database.new("./.config/database.yml")}
       it "#initialize" do
         expect(subject.filename).to be_a(String)
       end
@@ -103,8 +103,8 @@ Spec2.describe Bot do
           expect(subject.message).to be_a(String)
         end
         it "::config" do
-          File.write("config/config.yml", "name: \"hello\"")
-          subject.config = ["config", "config.yml"]
+          File.write("./.config/config.yml", "name: \"hello\"")
+          subject.config = [".config", "config.yml"]
           expect(subject.config["name"]).to be_a(String)
         end
         it "#run" do

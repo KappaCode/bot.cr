@@ -1,8 +1,8 @@
 module Resolver
   class Credentials
     getter filename
-    def initialize()
-      @filename = "config/credentials.yml"
+    def initialize(filename)
+      @filename = filename
     end
     def load
       contents = File.read(@filename)
